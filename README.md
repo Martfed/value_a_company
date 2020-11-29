@@ -19,4 +19,4 @@ The backend is divided in several microservices coded in NodeJS. For this app I'
 
 ![alt text](https://github.com/Martfed/value_a_company/blob/main/value%20a%20company%20arch.png)
 
-Main is considered as a controller. It receives a payload with a specific company name and just calls the other two lambdas (cash flow and balance sheet) which are in charge of getting and processing the information
+The user selects a company from a predifined list. This company is then sent to Main which is considered as a controller. It receives the payload and just calls the other two lambdas (cash flow and balance sheet) which are in charge of getting and processing the information. After sending it back to Main this one will send it to the Vue app for it be show in the front end.
