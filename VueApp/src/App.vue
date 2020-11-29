@@ -3,25 +3,14 @@
     <h1>Value a company</h1>
     <p>pick a company</p>
     <select name="Choose a company" v-model="companyPicker" @change="getQuotes()">
-      <option value="AAPL">Apple</option>
-      <option value="CRUS">Cirrus Logic</option>
-      <option value="FB">Facebook</option>
-      <option value="MSFT">Microsoft</option>
-      <option value="BA">Boeing</option>
-      <option value="V">Visa</option>
-      <option value="DIS">Disney</option>
-      <option value="DLR">Digital Realty Trust</option>
-      <option value="ATVI">Activision Blizzard</option>
-      <option value="GE">General Electronics</option>
-      <option value="IBM">IBM</option>
-      <option value="KO">Coca-cola</option>
-      <option value="LB">L brands</option>
+      <option :value="company.code" v-for="company in companies" :key="company.code">{{ company.name }}</option>
     </select>
     <p>{{ companyPicker }}</p>
     <div v-if="loaded" style="display: flex">
-      <FinancialData :financial-data="debtToEquity"/>
-      <FinancialData :financial-data="currentRatio"/>
-      <FinancialData :financial-data="returnOnEquity"/>
+      <FinancialData :financial-data="correctData(graph)" v-for="graph in graphs" :key="graph"/>
+    </div>
+    <div class="loading-main" v-else>
+      <div v-for="graph in graphs" :key="graph" class="loader"></div>
     </div>
   </div>
 </template>
@@ -51,6 +40,27 @@ export default {
         years: [],
         type: 'Return on Equity'
       },
+      bookValuePerShare: {
+        data: [],
+        years: [],
+        type: 'Book value per share'
+      },
+      companies: [
+        { code: 'AAPL', name: 'Apple' },
+        { code: 'CRUS', name: 'Cirrus Logic' },
+        { code: 'FB', name: 'Facebook' },
+        { code: 'MSFT', name: 'Microsoft' },
+        { code: 'BA', name: 'Boeing' },
+        { code: 'V', name: 'Visa' },
+        { code: 'DIS', name: 'Disney' },
+        { code: 'DLR', name: 'Digital Realty Trust' },
+        { code: 'ATVI', name: 'Activision Blizzard' },
+        { code: 'GE', name: 'General Electronics' },
+        { code: 'IBM', name: 'IBM' },
+        { code: 'KO', name: 'Coca-cola' },
+        { code: 'LB', name: 'L brands' }
+      ],
+      graphs: ['debtToEquity', 'currentRatio', 'returnOnEquity', 'bookValuePerShare'],
       companyPicker: 'AAPL',
       loaded: false,
     }
@@ -68,6 +78,9 @@ export default {
     }
   },
   methods: {
+    correctData (string) {
+      return this[string]
+    },
     setEquityOrCurrentRatio (responseBody, calculationType) {
       const debtEquities = responseBody[calculationType].map(equity => equity[calculationType])
       const debtYears = responseBody[calculationType].map(equity => equity.year)
@@ -77,20 +90,22 @@ export default {
     async getQuotes () {
       this.loaded = false
       if (sessionStorage[this.companyPicker]) {
-        this.debtToEquity = await JSON.parse(sessionStorage[this.companyPicker]).debtToEquity
-        this.currentRatio = await JSON.parse(sessionStorage[this.companyPicker]).currentRatio
-        this.returnOnEquity = await JSON.parse(sessionStorage[this.companyPicker]).returnOnEquity
+        for (let i = 0; i < this.graphs.length; i += 1) {
+          this[this.graphs[i]] = await JSON.parse(sessionStorage[this.companyPicker])[this.graphs[i]]
+        }
       } else {
         await this.axios
           .get('https://poeurvcc5f.execute-api.eu-west-3.amazonaws.com/dev/financial-data/',this.config)
           .then(response => {
-            this.setEquityOrCurrentRatio(response.data, 'debtToEquity')
-            this.setEquityOrCurrentRatio(response.data, 'currentRatio')
-            this.setEquityOrCurrentRatio(response.data, 'returnOnEquity')
+            const self = this
+            this.graphs.forEach((graph) => {
+              self.setEquityOrCurrentRatio(response.data, graph)
+            })
             sessionStorage.setItem(this.companyPicker, JSON.stringify({
               debtToEquity: this.debtToEquity,
               currentRatio: this.currentRatio,
-              returnOnEquity: this.returnOnEquity
+              returnOnEquity: this.returnOnEquity,
+              bookValuePerShare: this.bookValuePerShare
             }))
         })
       }
@@ -112,5 +127,26 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.loading-main {
+  margin: 0 150px;
+  margin-top: 130px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #e77579; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 </style>
