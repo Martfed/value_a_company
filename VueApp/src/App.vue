@@ -137,8 +137,8 @@ export default {
 }
 
 .loader {
-  border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #e77579; /* Blue */
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #e77579;
   border-radius: 50%;
   width: 120px;
   height: 120px;
