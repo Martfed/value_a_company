@@ -18,3 +18,5 @@ The front is made using VueJS
 The backend is divided in several microservices coded in NodeJS. For this app I've used AWS lambda and API Gateway. The schema below gives an overview of the architecture of this project:
 
 ![alt text](https://github.com/Martfed/value_a_company/blob/main/value%20a%20company%20arch.png)
+
+Main is considered as a controller. It receives a payload with a specific company name and just calls the other two lambdas (cash flow and balance sheet) which are in charge of getting and processing the information
