@@ -22,6 +22,7 @@ exports.handler = async (event, context) => {
   const balanceSheet = await new Promise((resolve, reject) => {
     lambda.invoke(balanceSheetParams, (error, data) => { resolve(data) })
   })
+  console.log('test')
 
   const parsedBalanceSheet = JSON.parse(balanceSheet.Payload).body
   return {
