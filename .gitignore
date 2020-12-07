@@ -1,0 +1,8 @@
+*.zip
+node_modules
+modules
+*__pycache__*
+*~
+*.pyc
+client_secrets.json
+.DS_Store
