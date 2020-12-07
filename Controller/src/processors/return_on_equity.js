@@ -1,5 +1,5 @@
 const returnOnEquity = (cashflow, shareHoldersEquity) => {
-  const roe = cashflow.body.netIncome.map((report, index) => {
+  const roe = cashflow.netIncome.map((report, index) => {
     report.totalShareholderEquity = shareHoldersEquity[index].shareHoldersEquity
     return report
   })
