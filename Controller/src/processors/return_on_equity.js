@@ -1,6 +1,5 @@
 const returnOnEquity = (cashflow, shareHoldersEquity) => {
-  const parsedPayload = JSON.parse(cashflow.Payload)
-  const roe = parsedPayload.body.netIncome.map((report, index) => {
+  const roe = cashflow.netIncome.map((report, index) => {
     report.totalShareholderEquity = shareHoldersEquity[index].shareHoldersEquity
     return report
   })
