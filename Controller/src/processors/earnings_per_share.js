@@ -1,10 +1,6 @@
-const earningsPerShare = (body) => {
-  return body.annualEarnings.map(report => {
-    return {
-      earningsPerShare: report.reportedEPS,
-      year: Number.parseInt(report.fiscalDateEnding.split('-')[0])
-    }
-  })
-}
+const earningsPerShare = (body) => body.annualEarnings.map((report) => ({
+  earningsPerShare: report.reportedEPS,
+  year: Number.parseInt(report.fiscalDateEnding.split('-')[0], 10),
+}));
 
 module.exports = { earningsPerShare };

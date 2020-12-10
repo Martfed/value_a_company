@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
 require('dotenv').config({ silent: true });
 const nock = require('nock');
-const balanceSheet = require('./balance_sheet.json')
-const cashFlow = require('./cash_flow.json')
-const earnings = require('./earnings.json')
-const overview = require('./company_overview.json')
+const balanceSheet = require('./balance_sheet.json');
+const cashFlow = require('./cash_flow.json');
+const earnings = require('./earnings.json');
+const overview = require('./company_overview.json');
 
 process.env.API_KEY = 'test';
 
@@ -26,5 +26,5 @@ nock('https://www.alphavantage.co')
 
 const { handler } = require('../index');
 
-handler({ queryStringParameters: { company: "IBM" } })
-  .then(res => console.log(JSON.stringify(res)));
+handler({ queryStringParameters: { company: 'IBM' } })
+  .then((res) => console.log(JSON.stringify(res)));
