@@ -33,7 +33,7 @@ exports.handler = async (event) => {
       currentRatio: balanceSheet.currentRatio,
       bookValuePerShare: balanceSheet.bookValuePerShare,
       returnOnEquity: returnOnEquity(cashFlow, balanceSheet.shareHoldersEquity),
-      earningsPerShare: earnings,
+      earningsPerShare: earnings.earningsPerShare,
       companyData,
     }),
   };

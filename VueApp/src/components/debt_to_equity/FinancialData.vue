@@ -24,12 +24,18 @@
           datasets: [
             {
               label: this.financialData.type,
-              backgroundColor: '#f87979',
+              backgroundColor: '#ffc04a',
               data: this.financialData.data
             }
           ]
         },
         chartOptions: {
+          legend: {
+            labels: {
+              fontColor: "#ffc04a",
+              fontSize: 14
+            }
+          },
           scales: {
             yAxes: [{
               ticks: {
@@ -37,7 +43,13 @@
                 max: Math.max(...this.financialData.data) + 1,
                 stepSize: 100,
                 reverse: false,
-                beginAtZero: true
+                beginAtZero: true,
+                fontColor: '#ffc04a'
+              }
+            }],
+            xAxes: [{
+              ticks: {
+                fontColor: '#ffc04a'
               }
             }]
           }

@@ -1,21 +1,31 @@
 <template>
   <div id="app">
-    <h1>Value a company</h1>
-    <p>pick a company</p>
-    <select name="Choose a company" v-model="companyPicker" @change="getQuotes()">
-      <option :value="company.code" v-for="company in companies" :key="company.code">{{ company.name }}</option>
+    <h1 class="text-8xl text-white font-sans mb-32">Value a company</h1>
+    <h2 class="text-white text-xl">Pick a company</h2>
+    <select 
+      name="Choose a company"
+      v-model="companyPicker"
+      @change="getQuotes()"
+      class="h-10 rounded shadow-lg"
+    >
+      <option :value="company.code" v-for="company in companies" :key="company.code">
+        {{ company.name }}
+      </option>
     </select>
-    <p>{{ companyPicker }}</p>
-    <div v-if="loaded" style="display: flex">
-      <FinancialData :financial-data="correctData(graph)" v-for="graph in graphs" :key="graph"/>
+    <div v-if="loaded" class="lg:grid gap-10 grid-cols-2 2xl:mx-96 mt-32">
+      <FinancialData
+      :financial-data="correctData(graph)"
+      v-for="graph in graphs"
+      :key="graph"/>
     </div>
-    <div class="loading-main" v-else>
+    <div class="lg:grid gap-4 grid-cols-3" v-else>
       <div v-for="graph in graphs" :key="graph" class="loader"></div>
     </div>
   </div>
 </template>
 
 <script>
+import "tailwindcss/tailwind.css"
 import FinancialData from './components/debt_to_equity/FinancialData.vue'
 
 export default {
@@ -45,6 +55,11 @@ export default {
         years: [],
         type: 'Book value per share'
       },
+      earningsPerShare: {
+        data: [],
+        years: [],
+        type: 'Earnings per share'
+      },
       companies: [
         { code: 'AAPL', name: 'Apple' },
         { code: 'CRUS', name: 'Cirrus Logic' },
@@ -60,7 +75,7 @@ export default {
         { code: 'KO', name: 'Coca-cola' },
         { code: 'LB', name: 'L brands' }
       ],
-      graphs: ['debtToEquity', 'currentRatio', 'returnOnEquity', 'bookValuePerShare'],
+      graphs: ['debtToEquity', 'currentRatio', 'returnOnEquity', 'bookValuePerShare', 'earningsPerShare'],
       companyPicker: 'AAPL',
       loaded: false,
     }
@@ -82,7 +97,6 @@ export default {
       return this[string]
     },
     setEquityOrCurrentRatio (responseBody, calculationType) {
-      console.log(responseBody, calculationType)
       const debtEquities = responseBody[calculationType].map(equity => equity[calculationType])
       const debtYears = responseBody[calculationType].map(equity => equity.year)
       this[calculationType].data = debtEquities
@@ -103,6 +117,7 @@ export default {
               self.setEquityOrCurrentRatio(response.data, graph)
             })
             sessionStorage.setItem(this.companyPicker, JSON.stringify({
+              earningsPerShare: this.earningsPerShare,
               debtToEquity: this.debtToEquity,
               currentRatio: this.currentRatio,
               returnOnEquity: this.returnOnEquity,
@@ -130,11 +145,8 @@ export default {
   margin-top: 60px;
 }
 
-.loading-main {
-  margin: 0 150px;
-  margin-top: 130px;
-  display: flex;
-  justify-content: space-between;
+body {
+  background-image: linear-gradient(to right top, #10223b, #142a49, #193357, #1e3c65, #234574);
 }
 
 .loader {
