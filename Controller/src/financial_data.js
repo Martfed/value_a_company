@@ -6,6 +6,7 @@ const { currentRatio } = require('./processors/current_ratio');
 const { debtToEquity } = require('./processors/debt_to_equity');
 const { shareHoldersEquity } = require('./processors/share_holders_equity');
 const { earningsPerShare } = require('./processors/earnings_per_share');
+const { bookValuePerShare } = require('./processors/book_value_per_share');
 const { netIncome } = require('./processors/net_income');
 
 const getBalanceSheet = async (event) => {
@@ -15,6 +16,7 @@ const getBalanceSheet = async (event) => {
     debtToEquity: debtToEquity(response.data),
     currentRatio: currentRatio(response.data),
     shareHoldersEquity: shareHoldersEquity(response.data),
+    bookValuePerShare: bookValuePerShare(response.data),
   };
 };
 

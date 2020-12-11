@@ -31,6 +31,7 @@ exports.handler = async (event) => {
     body: JSON.stringify({
       debtToEquity: balanceSheet.debtToEquity,
       currentRatio: balanceSheet.currentRatio,
+      bookValuePerShare: balanceSheet.bookValuePerShare,
       returnOnEquity: returnOnEquity(cashFlow, balanceSheet.shareHoldersEquity),
       earningsPerShare: earnings,
       companyData,

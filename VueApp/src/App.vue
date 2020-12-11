@@ -82,6 +82,7 @@ export default {
       return this[string]
     },
     setEquityOrCurrentRatio (responseBody, calculationType) {
+      console.log(responseBody, calculationType)
       const debtEquities = responseBody[calculationType].map(equity => equity[calculationType])
       const debtYears = responseBody[calculationType].map(equity => equity.year)
       this[calculationType].data = debtEquities
