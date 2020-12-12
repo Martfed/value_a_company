@@ -12,6 +12,8 @@ Current finantial info displayed (more to come):
 - Debt to equity
 - Current ratio
 - Return on equity
+- Book value per share
+- Earnings per share
 
 ## Architecture
 
