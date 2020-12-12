@@ -24,7 +24,6 @@
           datasets: [
             {
               label: this.financialData.type,
-              backgroundColor: '#ffc04a',
               data: this.financialData.data
             }
           ]
@@ -32,7 +31,7 @@
         chartOptions: {
           legend: {
             labels: {
-              fontColor: "#ffc04a",
+              fontColor: "#ebedf0",
               fontSize: 14
             }
           },
@@ -44,12 +43,12 @@
                 stepSize: 100,
                 reverse: false,
                 beginAtZero: true,
-                fontColor: '#ffc04a'
+                fontColor: '#ebedf0'
               }
             }],
             xAxes: [{
               ticks: {
-                fontColor: '#ffc04a'
+                fontColor: '#ebedf0'
               }
             }]
           }

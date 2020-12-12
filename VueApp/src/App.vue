@@ -12,6 +12,7 @@
         {{ company.name }}
       </option>
     </select>
+    <CompanyInfo :company-info="companyInfo" v-if="loaded"/>
     <div v-if="loaded" class="lg:grid gap-10 grid-cols-2 2xl:mx-96 mt-32">
       <FinancialData
       :financial-data="correctData(graph)"
@@ -21,17 +22,22 @@
     <div class="lg:grid gap-4 grid-cols-3" v-else>
       <div v-for="graph in graphs" :key="graph" class="loader"></div>
     </div>
+    <Footer/>
   </div>
 </template>
 
 <script>
 import "tailwindcss/tailwind.css"
-import FinancialData from './components/debt_to_equity/FinancialData.vue'
+import CompanyInfo from './components/CompanyInfo.vue'
+import FinancialData from './components/FinancialData.vue'
+import Footer from './components/Footer.vue'
 
 export default {
   name: 'App',
   components: {
-    FinancialData
+    CompanyInfo,
+    FinancialData,
+    Footer
   },
   data () {
     return {
@@ -76,6 +82,7 @@ export default {
         { code: 'LB', name: 'L brands' }
       ],
       graphs: ['debtToEquity', 'currentRatio', 'returnOnEquity', 'bookValuePerShare', 'earningsPerShare'],
+      companyInfo: {},
       companyPicker: 'AAPL',
       loaded: false,
     }
@@ -113,6 +120,7 @@ export default {
           .get('https://poeurvcc5f.execute-api.eu-west-3.amazonaws.com/dev/financial-data/',this.config)
           .then(response => {
             const self = this
+            this.companyInfo = response.data.companyData
             this.graphs.forEach((graph) => {
               self.setEquityOrCurrentRatio(response.data, graph)
             })
@@ -121,7 +129,8 @@ export default {
               debtToEquity: this.debtToEquity,
               currentRatio: this.currentRatio,
               returnOnEquity: this.returnOnEquity,
-              bookValuePerShare: this.bookValuePerShare
+              bookValuePerShare: this.bookValuePerShare,
+              companyInfo: this.companyInfo
             }))
         })
       }
