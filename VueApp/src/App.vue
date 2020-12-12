@@ -81,7 +81,13 @@ export default {
         { code: 'KO', name: 'Coca-cola' },
         { code: 'LB', name: 'L brands' }
       ],
-      graphs: ['debtToEquity', 'currentRatio', 'returnOnEquity', 'bookValuePerShare', 'earningsPerShare'],
+      graphs: [
+        'debtToEquity',
+        'currentRatio',
+        'returnOnEquity',
+        'bookValuePerShare',
+        'earningsPerShare'
+      ],
       companyInfo: {},
       companyPicker: 'AAPL',
       loaded: false,
@@ -115,6 +121,7 @@ export default {
         for (let i = 0; i < this.graphs.length; i += 1) {
           this[this.graphs[i]] = await JSON.parse(sessionStorage[this.companyPicker])[this.graphs[i]]
         }
+        this.companyInfo = JSON.parse(sessionStorage[this.companyPicker]).companyInfo
       } else {
         await this.axios
           .get('https://poeurvcc5f.execute-api.eu-west-3.amazonaws.com/dev/financial-data/',this.config)
