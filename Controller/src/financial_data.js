@@ -11,7 +11,7 @@ const { netIncome } = require('./processors/net_income');
 
 const getBalanceSheet = async (event) => {
   const response = await axios.get(`https://www.alphavantage.co/query?function=BALANCE_SHEET&symbol=${event.company}&apikey=${API_KEY}`);
-
+  console.log('test');
   return {
     debtToEquity: debtToEquity(response.data),
     currentRatio: currentRatio(response.data),
