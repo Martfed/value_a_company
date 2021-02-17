@@ -1,11 +1,26 @@
 <template>
-  <div class="m-auto h-40 border-black border-2 w-3/4 mt-20 rounded-xl background_gradient">
+  <div class="m-auto h-40 w-3/4 mt-20 rounded-xl background_gradient">
     <div class="flex">
-      <p class="text-white flex-auto">{{ companyInfo.Sector }}</p>
-      <p class="text-white flex-auto">{{ companyInfo.Exchange }}</p>
-      <p class="text-white flex-auto">{{ companyInfo.DividendPerShare }}</p>
-      <p class="text-white flex-auto">{{ companyInfo.DividendYield }}</p>
-      <p class="text-white flex-auto">{{ companyInfo.PERatio }}</p>
+      <div class="flex-auto text-white">
+        <p class="underline">Sector</p>
+        <p>{{ companyInfo.Sector }}</p>
+      </div>
+      <div class="flex-auto text-white">
+        <p class="underline">Stock exchange</p>
+        <p>{{ companyInfo.Exchange }}</p>
+      </div>
+      <div class="flex-auto text-white">
+        <p class="underline">Dividend per share</p>
+        <p>{{ companyInfo.DividendPerShare }}</p>
+      </div>
+      <div class="flex-auto text-white">
+        <p class="underline">Dividend yield</p>
+        <p>{{ companyInfo.DividendYield }}</p>
+      </div>
+      <div class="flex-auto text-white">
+        <p class="underline">Current PE ratio</p>
+        <p>{{ companyInfo.PERatio }}</p>
+      </div>
     </div>
   </div>
 </template>

@@ -79,7 +79,8 @@ export default {
         { code: 'GE', name: 'General Electronics' },
         { code: 'IBM', name: 'IBM' },
         { code: 'KO', name: 'Coca-cola' },
-        { code: 'LB', name: 'L brands' }
+        { code: 'LB', name: 'L brands' },
+        { code: 'PFE', name: 'Pfizer' }
       ],
       graphs: [
         'debtToEquity',
@@ -89,7 +90,7 @@ export default {
         'earningsPerShare'
       ],
       companyInfo: {},
-      companyPicker: 'AAPL',
+      companyPicker: 'PFE',
       loaded: false,
     }
   },
